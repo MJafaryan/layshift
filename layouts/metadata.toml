@@ -3,6 +3,11 @@ name = "German"
 symbol = "de"
 layouts = ["qwertz"]
 
+[languages.spanish]
+name = "Spanish"
+symbol = "es"
+layouts = "winkey"
+
 [languages.english]
 name = "English"
 symbol = "en"
