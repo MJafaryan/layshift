@@ -1,41 +1,51 @@
 use std::io::Write;
 use std::process::{Command, Stdio};
 
-fn is_wayland() -> bool {
-    std::env::var("WAYLAND_DISPLAY").is_ok()
+enum DisplayServer {
+    Wayland,
+    X11,
+}
+
+fn get_display_server() -> Result<DisplayServer, Box<dyn std::error::Error>> {
+    match std::env::var("XDG_SESSION_TYPE")?.as_str() {
+        "wayland" => Ok(DisplayServer::Wayland),
+        "x11" => Ok(DisplayServer::X11),
+        _ => Err("Unsupported display server.".into()),
+    }
 }
 
 pub fn read() -> Result<String, Box<dyn std::error::Error>> {
-    let output = if is_wayland() {
-        Command::new("wl-paste").output()?
-    } else {
-        Command::new("xclip")
+    let output = match get_display_server()? {
+        DisplayServer::Wayland => Command::new("wl-paste").output()?,
+        DisplayServer::X11 => Command::new("xclip")
             .args(["-selection", "clipboard", "-o"])
-            .output()?
+            .output()?,
     };
 
     if !output.status.success() {
         return Err("Failed to read from clipboard.".into());
     }
+
     Ok(String::from_utf8(output.stdout)?)
 }
 
 pub fn write(text: &str) -> Result<(), Box<dyn std::error::Error>> {
-    let status = if is_wayland() {
-        Command::new("wl-copy").arg(text).status()?
-    } else {
-        let mut child = Command::new("xclip")
-            .args(["-selection", "clipboard"])
-            .stdin(Stdio::piped())
-            .spawn()?;
-        if let Some(mut stdin) = child.stdin.take() {
-            stdin.write_all(text.as_bytes())?;
+    let mut command = match get_display_server()? {
+        DisplayServer::Wayland => Command::new("wl-copy"),
+        DisplayServer::X11 => {
+            let mut command = Command::new("xclip");
+            command.args(["-selection", "clipboard"]);
+            command
         }
-        child.wait()?
     };
+
+    let mut child = command.stdin(Stdio::piped()).spawn()?;
+    child.stdin.as_mut().unwrap().write_all(text.as_bytes())?;
+    let status = child.wait()?;
 
     if !status.success() {
         return Err("Failed to write to clipboard.".into());
     }
+
     Ok(())
 }
