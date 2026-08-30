@@ -1,5 +1,5 @@
 # layshift
-A small Wayland clipboard tool for converting text between keyboard layouts.
+A small linux clipboard tool for converting text between keyboard layouts.
 
 ![preview](preview.gif)
 
