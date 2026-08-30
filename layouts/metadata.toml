@@ -27,3 +27,8 @@ layouts = ["azerty"]
 name = "Russian"
 symbol = "ru"
 layouts = ["standard"]
+
+[languages.turkish]
+name = "Turkish"
+symbol = "tr"
+layouts = ["q"]
