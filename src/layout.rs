@@ -19,6 +19,7 @@ impl Layout {
         let layout_address = Self::parse_layout_name(layout_name)?;
 
         let content = std::fs::read_to_string(layout_address)
+            .or_else(|_| std::fs::read_to_string(layout_name))
             .map_err(|_| format!("Layout {layout_name} not found."))?;
 
         let layout = serde_json::from_str(&content)?;
