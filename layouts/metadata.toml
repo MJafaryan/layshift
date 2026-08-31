@@ -1,3 +1,8 @@
+[languages.arabic]
+name = "Arabic"
+symbol = "ara"
+layouts = ["101"]
+
 [languages.german]
 name = "German"
 symbol = "de"
