@@ -16,10 +16,10 @@ pub struct Layout {
 
 impl Layout {
     pub fn new(layout_name: &str) -> Result<Self, Box<dyn std::error::Error>> {
-        let layout_address = Self::parse_layout_name(layout_name)?;
+        let layout_address =
+            Self::parse_layout_name(layout_name).unwrap_or_else(|_| layout_name.to_string());
 
         let content = std::fs::read_to_string(layout_address)
-            .or_else(|_| std::fs::read_to_string(layout_name))
             .map_err(|_| format!("Layout {layout_name} not found."))?;
 
         let layout = serde_json::from_str(&content)?;
