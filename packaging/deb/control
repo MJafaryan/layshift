@@ -1,0 +1,9 @@
+Package: layshift
+Version: 2.0.1
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: wl-clipboard | xclip
+Maintainer: M.Jafaryan
+Description: A clipboard tool for converting text between keyboard layouts
+ A small Linux clipboard tool for converting text between keyboard layouts.
