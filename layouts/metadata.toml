@@ -28,6 +28,11 @@ name = "French"
 symbol = "fr"
 layouts = ["azerty"]
 
+[languages.portuguese]
+name = "Portuguese"
+symbol = "pt"
+layouts = ["standard"]
+
 [languages.russian]
 name = "Russian"
 symbol = "ru"
