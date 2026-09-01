@@ -29,5 +29,5 @@ cp -r layouts %{buildroot}%{_datadir}/layshift/
 %{_datadir}/layshift/
 
 %changelog
-* Tue Sep 01 2026 Mohammadreza Jafaryan
+* Tue Sep 01 2026 M.Jafaryan
 - Initial RPM package
