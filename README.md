@@ -9,6 +9,9 @@ text -copy/cut-> clipboard -(wl-clipboard/xclip)-> layshift -(wl-clipboard/xclip
 ```
 
 ## Installation
+### Install from binaries
+Download the latest binary package for your os and install it using your system's package manager.
+
 ### Install from source code
 Clone the repository or download the latest release then go to the project directory and run this `just` command:
 ```bash
@@ -22,6 +25,7 @@ just install
 
 ## Layouts
 Layouts can be specified in two ways:
+
 ### Built-in layouts
 ```text
 <language>:<variant>
@@ -30,7 +34,7 @@ Layouts can be specified in two ways:
 ### Custom layouts
 You can also provide a path to a layout JSON file.
 
-- If your layout is not supported, just add it as a JSON file😁️.
+- The JSON file should follow this format:
 ```json
 {
     "normal": ["`", "1", ...],
