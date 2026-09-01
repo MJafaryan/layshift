@@ -8,7 +8,7 @@ use crate::{clipboard, config, layout, metadata};
 #[command(name = "layshift")]
 pub struct Cli {
     #[command(subcommand)]
-    pub command: Commands,
+    command: Commands,
 }
 
 #[derive(Subcommand, Debug)]
