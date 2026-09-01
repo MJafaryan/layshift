@@ -42,3 +42,8 @@ layouts = ["standard"]
 name = "Turkish"
 symbol = "tr"
 layouts = ["q"]
+
+[languages.ukrainian]
+name = "Ukrainian"
+symbol = "ua"
+layouts = ["standard"]
