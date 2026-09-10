@@ -13,15 +13,49 @@ pub struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
+    #[command(
+        about = "Maps text between two keyboard layouts",
+        long_about = "Maps text between two keyboard layouts\n\
+                      If you have set default layouts, just run:\n\
+                        `layshift map`\n\
+                      And for mapping between two layouts in general:\n\
+                        `layshift map <source_layout> <target_layout>`\n\
+                      Example:\n\
+                        `layshift map fa:winkey en:qwerty`"
+    )]
     Map {
+        /// Source keyboard layout
         source: Option<String>,
+        /// Target keyboard layout
         target: Option<String>,
     },
+    #[command(
+        about = "Set two layouts as default layouts",
+        long_about = "Set two layouts as default layouts\n\
+                        `layshift set-default <source_layout> <target_layout>`\n\
+                      Example:\n\
+                        `layshift set-default en:qwerty fa:winkey`"
+    )]
     SetDefault {
+        /// Source keyboard layout
         source: String,
+        /// Target keyboard layout
         target: String,
     },
+    #[command(
+        about = "List available languages and layouts",
+        long_about = "Show list of languages/layouts\n\
+                      For showing languages list run:\n\
+                        `layshift list`\n\
+                      And for showing a language layouts list run:\n\
+                        `layshift list <language>`\n\
+                      Example:\n\
+                        `layshift list english`\n\
+                      Or just use the language symbol:\n\
+                        `layshift list en`"
+    )]
     List {
+        /// Language
         language: Option<String>,
     },
 }
