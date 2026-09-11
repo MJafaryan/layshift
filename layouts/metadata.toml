@@ -33,6 +33,11 @@ name = "Italian"
 symbol = "it"
 layouts = ["standard"]
 
+[languages.polish]
+name = "Polish"
+symbol = "pl"
+layouts = ["qwerty"]
+
 [languages.portuguese]
 name = "Portuguese"
 symbol = "pt"
