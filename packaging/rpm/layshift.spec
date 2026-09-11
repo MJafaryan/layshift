@@ -1,6 +1,6 @@
 Name: layshift
 Version: 2.1.0
-Release: 1%{?dist}
+Release: 1
 Summary: A clipboard tool for converting text between keyboard layouts
 
 License: GPL-3.0
@@ -21,6 +21,7 @@ DATA_DIR=%{_datadir}/layshift cargo build --release
 
 %install
 install -Dm755 target/release/layshift %{buildroot}%{_bindir}/layshift
+
 mkdir -p %{buildroot}%{_datadir}/layshift
 cp -r layouts %{buildroot}%{_datadir}/layshift/
 
