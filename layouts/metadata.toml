@@ -33,6 +33,11 @@ name = "Italian"
 symbol = "it"
 layouts = ["standard"]
 
+[languages.dutch]
+name = "Dutch"
+symbol = "nl"
+layouts = ["standard"]
+
 [languages.polish]
 name = "Polish"
 symbol = "pl"
