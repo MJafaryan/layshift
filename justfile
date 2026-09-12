@@ -28,19 +28,21 @@ test:
 # Build project for rpm-based distros
 [group: 'Build']
 build-rpm:
+    #!/usr/bin/env bash
     source_dir="$HOME/rpmbuild/SOURCES"
     source_archive="layshift.tar.gz"
 
     tar -czf "$source_archive" --transform 's,^,layshift/,' Cargo.toml Cargo.lock src/ layouts/
 
-    mkdir -p "%source_dir"
-    mv "%source_archive" "$source_dir"
+    mkdir -p "$source_dir"
+    mv "$source_archive" "$source_dir"
 
     rpmbuild -ba packaging/rpm/layshift.spec
 
 # Build project for debian-based distros
 [group: 'Build']
 build-deb:
+    #!/usr/bin/env bash
     data_dir="/usr/share/layshift"
 
     package_dir="target/deb"
