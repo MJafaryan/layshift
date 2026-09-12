@@ -5,6 +5,11 @@ data_dir := "/usr/local/share/layshift"
 default:
     @just --list
 
+# Check the project errors
+[group: 'Development']
+check:
+    DATA_DIR="." cargo check
+
 # Build the project for testing and development
 [group: 'Development']
 build:
