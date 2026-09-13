@@ -14,14 +14,14 @@ pub struct Cli {
 #[derive(Subcommand, Debug)]
 enum Commands {
     #[command(
-        about = "Maps text between two keyboard layouts",
-        long_about = "Maps text between two keyboard layouts\n\
-                      If you have set default layouts, just run:\n\
-                        `layshift map`\n\
-                      And for mapping between two layouts in general:\n\
-                        `layshift map <source_layout> <target_layout>`\n\
+        about = "Map text between two keyboard layouts",
+        long_about = "Map text between two keyboard layouts\n\
+                      To map between two layouts:\n\
+                      \tlayshift map <source_layout> <target_layout>\n\n\
                       Example:\n\
-                        `layshift map fa:winkey en:qwerty`"
+                      \tlayshift map fa:winkey en:qwerty\n\n\
+                      If you have set default layouts, just run:\n\
+                      \tlayshift map\n"
     )]
     Map {
         /// Source keyboard layout
@@ -32,9 +32,9 @@ enum Commands {
     #[command(
         about = "Set two layouts as default layouts",
         long_about = "Set two layouts as default layouts\n\
-                        `layshift set-default <source_layout> <target_layout>`\n\
+                      \tlayshift set-default <source_layout> <target_layout>\n\n\
                       Example:\n\
-                        `layshift set-default en:qwerty fa:winkey`"
+                      \tlayshift set-default en:qwerty fa:winkey"
     )]
     SetDefault {
         /// Source keyboard layout
@@ -44,15 +44,15 @@ enum Commands {
     },
     #[command(
         about = "List available languages and layouts",
-        long_about = "Show list of languages/layouts\n\
-                      For showing languages list run:\n\
-                        `layshift list`\n\
-                      And for showing a language layouts list run:\n\
-                        `layshift list <language>`\n\
+        long_about = "List available languages and layouts\n\
+                      To list all available languages, run:\n\
+                      \tlayshift list\n\n\
+                      To list layouts for a language:\n\
+                      \tlayshift list <language>\n\n\
                       Example:\n\
-                        `layshift list english`\n\
-                      Or just use the language symbol:\n\
-                        `layshift list en`"
+                      \tlayshift list english\n\n\
+                      Or use the language symbol:\n\
+                      \tlayshift list en"
     )]
     List {
         /// Language
@@ -78,7 +78,7 @@ impl Cli {
         let (source, target) = match (source, target) {
             (None, None) => config::get_default_layouts()?,
             (Some(source), Some(target)) => (source, target),
-            _ => return Err("Both source and target layouts are required.".into()),
+            _ => return Err("Provide both source and target layouts, or neither.".into()),
         };
 
         let source_layout = layout::Layout::new(&source)?;
@@ -92,6 +92,10 @@ impl Cli {
     }
 
     fn set_default(source: String, target: String) -> Result<(), Box<dyn std::error::Error>> {
+        // Validating input layouts
+        layout::Layout::new(&source)?;
+        layout::Layout::new(&target)?;
+
         let result = format!("source = \"{}\"\ntarget = \"{}\"\n", source, target);
 
         fs::create_dir_all(config::get_config_dir())?;
@@ -106,8 +110,8 @@ impl Cli {
                 let languages = metadata::get_languages_list()?;
 
                 for language in languages {
-                    print!(
-                        "{:<30} {} layouts\n",
+                    println!(
+                        "{:<30} {} layouts",
                         format!("{}({})", language.name, language.symbol),
                         language.layouts.len()
                     );
@@ -117,9 +121,8 @@ impl Cli {
                 let layouts = metadata::get_language_layouts(&language)?;
 
                 for layout in layouts {
-                    print!("{} ", layout);
+                    println!("{layout}");
                 }
-                print!("\n")
             }
         }
         Ok(())
