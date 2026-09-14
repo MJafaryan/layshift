@@ -16,7 +16,7 @@ layouts = ["winkey"]
 [languages.english]
 name = "English"
 symbol = "en"
-layouts = ["qwerty", "dvorak"]
+layouts = ["colemak", "dvorak", "qwerty"]
 
 [languages.persian]
 name = "Persian"
